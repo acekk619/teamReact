@@ -1,25 +1,16 @@
-
-.App {
-  text-align: center;
+.jumbotron { backGround:url(img/car.JPG) center no-repeat; background-size: cover;}
+.jumbotron h1{color: #fff;}
+.myRegion {
+  background-color: #fff;
+  padding:20px;
+  margin:20px;
+  border:solid 1px #f60;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.form-group {
+  margin:10px;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.buttonRight {
+  float: right;
 }
+body {background-color: #ffb;}
 
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
