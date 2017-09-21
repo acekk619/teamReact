@@ -20,12 +20,15 @@
   background-color: #fff;
   padding:20px;
   margin:20px;
-  border:solid #f60;
+  border:solid 1px #f60;
 }
 .form-group {
   margin:10px;
 }
-body {background-color: #ff9;}
+.buttonRight {
+  float: right;
+}
+body {background-color: #ffb;}
 
 </style>
 </head>
@@ -44,21 +47,28 @@ body {background-color: #ff9;}
 
   <div class="container myRegion">
     <form class="form-inline">
-      <div class="form-group">
-        <label for="date">日付</label>
-        <input type="text" class="form-control" id="date" placeholder="20170917">
-      </div>
-      <div class="form-group">
-        <label for="item">品目</label>
-        <input type="text" class="form-control" id="item" placeholder="食品">
-      </div>
-      <div class="form-group">
-        <label for="price">金額（円）</label>
-        <input type="text" class="form-control" id="price" placeholder="1000">
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-success">
-          <i class="glyphicon glyphicon-plus"></i>追加</button>
+      <div class="row buttonCenter">
+        <div class="col-sm-10">
+          <div class="form-group">
+            <label for="date">日付</label>
+            <input type="text" class="form-control" id="date" placeholder="20170917">
+          </div>
+          <div class="form-group">
+            <label for="item">品目</label>
+            <input type="text" class="form-control" id="item" placeholder="食品">
+          </div>
+          <div class="form-group">
+            <label for="price">金額（円）</label>
+            <input type="text" class="form-control" id="price" placeholder="1000">
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group buttonRight">
+            <button type="submit" class="btn btn-success btn-block">
+              <i class="glyphicon glyphicon-plus"></i>　追加　</button>
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -81,7 +91,7 @@ body {background-color: #ff9;}
             <td>20170917</td>
             <td>KitKat(岩泉ヨーグルト味)</td>
             <td>500</td>
-            <td><button type="button" class="btn btn-warning  btn-sm btn-block"><i class="glyphicon glyphicon-trash"></i></button></td>
+            <td><button type="button" class="btn btn-warning btn-sm btn-block"><i class="glyphicon glyphicon-trash"></i></button></td>
           </tr>
           <tr>
             <td>20170917</td>
