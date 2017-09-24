@@ -130,7 +130,8 @@ class MyList extends React.Component {
           <td>{item.item}</td>
           <td>{item.price}</td>
           <td>
-            <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block >
+            <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
+                    onClick={this.onClickButton}>
                     <i className="glyphicon glyphicon-trash"></i>
             </Button>
           </td>
@@ -152,7 +153,12 @@ class MyList extends React.Component {
         </Table>
        </div>
     );
-  }  
+  }
+  
+  onClickButton(){
+    
+  }
+  
 }
 
 export default App;
