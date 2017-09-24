@@ -20,6 +20,8 @@ class App extends Component {
                  ,{"key":"0","date":"20170917","item":"じゃがいも","price":300}
                 ];
     myJsonObj.person.push({"key":"0","date":"20170924","item":"ワイン","price":1200});
+    myJsonObj.person.push({"key":"0","date":"20170924","item":"ワイン","price":1200});
+    myJsonObj.person.splice(4,1);
     //let jsonText = JSON.stringify(myJsonObj);
     this.state = {myJsonObj:myJsonObj};
   }
@@ -39,7 +41,8 @@ class App extends Component {
 
         <MyInput onClickBtnAdd={this.onClickBtnAdd}/>
         
-        <MyList myJsonObj={this.state.myJsonObj} />
+        <MyList myJsonObj={this.state.myJsonObj}
+                onClickBtnDel={this.onClickBtnDel} />
       
       </div>
 
@@ -54,6 +57,13 @@ class App extends Component {
   onClickBtnAdd = (obj) => {
     let tmpObj=this.state.myJsonObj;
     tmpObj.person.push(obj);
+    this.setState({myJsonObj:tmpObj});
+  }
+
+  // コールバック関数：削除ボタン
+  onClickBtnDel = (index) => {
+    let tmpObj=this.state.myJsonObj;
+    tmpObj.person.splice(index,1);
     this.setState({myJsonObj:tmpObj});
   }
   
@@ -131,7 +141,8 @@ class MyList extends React.Component {
           <td>{item.price}</td>
           <td>
             <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
-                    onClick={this.onClickButton}>
+                    onClick={this.onClickButton}
+                    name={index}>
                     <i className="glyphicon glyphicon-trash"></i>
             </Button>
           </td>
@@ -155,8 +166,11 @@ class MyList extends React.Component {
     );
   }
   
-  onClickButton(){
-    
+  onClickButton = (event) => {
+    event.preventDefault();
+    // 行削除
+    let index = event.target.name;
+    this.props.onClickBtnDel(index);
   }
   
 }
