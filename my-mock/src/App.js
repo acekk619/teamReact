@@ -7,27 +7,26 @@ import { Form } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 
+class MyConst {
+  static get KEY_STRAGE(){
+    return "teamReact"
+  }
+}
+
 class App extends Component {
 
   constructor(props){
     super(props);
     
     //　一覧の初期表示
-    let myJsonObj = {};
-    myJsonObj.person = [
-                  {"key":"0","date":"20170917","item":"KitKat(岩泉ヨーグルト味)","price":500}
-                 ,{"key":"0","date":"20170917","item":"短角牛","price":2000}
-                 ,{"key":"0","date":"20170917","item":"じゃがいも","price":300}
-                ];
-    myJsonObj.person.push({"key":"0","date":"20170924","item":"ワイン","price":1200});
-    myJsonObj.person.push({"key":"0","date":"20170924","item":"ワイン","price":1200});
-    myJsonObj.person.splice(4,1);
-    //let jsonText = JSON.stringify(myJsonObj);
+    let myJsonObj = this.loadDB();
     this.state = {myJsonObj:myJsonObj};
   }
 
   getInitialState(){
-
+    // これがうまく動かなかった・・・
+    // stateの初期化は
+    // constructorでやっちゃいました。
   }
 
   render() {
@@ -42,7 +41,7 @@ class App extends Component {
         <MyInput onClickBtnAdd={this.onClickBtnAdd}/>
         
         <MyList myJsonObj={this.state.myJsonObj}
-                onClickBtnDel={this.onClickBtnDel} />
+                onClickBtnDel={this.onClickBtnDel}/>
       
       </div>
 
@@ -58,6 +57,7 @@ class App extends Component {
     let tmpObj=this.state.myJsonObj;
     tmpObj.person.push(obj);
     this.setState({myJsonObj:tmpObj});
+    this.updateDB(tmpObj);
   }
 
   // コールバック関数：削除ボタン
@@ -65,6 +65,38 @@ class App extends Component {
     let tmpObj=this.state.myJsonObj;
     tmpObj.person.splice(index,1);
     this.setState({myJsonObj:tmpObj});
+    this.updateDB(tmpObj);
+  }
+  
+  // localStorageへの保存
+  updateDB = (jsonObj) => {
+    window.localStorage.setItem(MyConst.KEY_STRAGE,JSON.stringify(jsonObj));
+  }
+
+  // localStorageから取得
+  loadDB = () => {
+    
+    //window.localStorage.clear();
+    
+    let jsonObj = JSON.parse(window.localStorage.getItem(MyConst.KEY_STRAGE));
+
+    if (jsonObj == null){
+      // localStorageが初期状態の場合はサンプルを表示
+      let myJsonObj = {};
+      myJsonObj.person = [
+                   {"key":"0","date":"20170917","item":"KitKat(岩泉ヨーグルト味)","price":500}
+                  ,{"key":"0","date":"20170917","item":"短角牛","price":2000}
+                  ,{"key":"0","date":"20170917","item":"じゃがいも","price":300}
+                  ];
+      myJsonObj.person.push({"key":"0","date":"20170924","item":"ワイン","price":1200});
+      myJsonObj.person.push({"key":"0","date":"20170924","item":"ワイン","price":1200});
+      myJsonObj.person.splice(4,1);
+
+      jsonObj = myJsonObj;
+    }
+
+  return jsonObj;
+  
   }
   
 }
@@ -134,20 +166,23 @@ class MyList extends React.Component {
   
   render(){
 
-    let listItems = this.props.myJsonObj.person.map((item,index) => 
-        <tr key={index}>
-          <td>{item.date}</td>
-          <td>{item.item}</td>
-          <td>{item.price}</td>
-          <td>
-            <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
-                    onClick={this.onClickButton}
-                    name={index}>
-                    <i className="glyphicon glyphicon-trash"></i>
-            </Button>
-          </td>
-        </tr>
-        );
+    let listItems = "";
+    if (this.props.myJsonObj != null) {
+      listItems = this.props.myJsonObj.person.map((item,index) => 
+          <tr key={index}>
+            <td>{item.date}</td>
+            <td>{item.item}</td>
+            <td>{item.price}</td>
+            <td>
+              <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
+                      onClick={this.onClickButton}
+                      name={index}>
+                      <i className="glyphicon glyphicon-trash"></i>
+              </Button>
+            </td>
+          </tr>
+          );
+    }
 
     return (
       <div className="myRegion">
