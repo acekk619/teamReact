@@ -6,6 +6,7 @@ import { Jumbotron } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 
 class MyConst {
   static get KEY_STRAGE(){
@@ -76,7 +77,8 @@ class App extends Component {
   // localStorageから取得
   loadDB = () => {
     
-    //window.localStorage.clear();
+    // localStorageの初期化
+    window.localStorage.clear();
     
     let jsonObj = JSON.parse(window.localStorage.getItem(MyConst.KEY_STRAGE));
 
@@ -153,7 +155,7 @@ class MyInput extends React.Component {
             <FormGroup>
               <Button type="button" className="btnAdd" bsStyle="success" 
                                     onClick={this.onClickButton}>
-                <i className="glyphicon glyphicon-plus"></i>追加</Button>
+                <Glyphicon glyph="plus" />追加</Button>
             </FormGroup>
           </Form>
         </div>    
@@ -177,7 +179,7 @@ class MyList extends React.Component {
               <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
                       onClick={this.onClickButton}
                       name={index}>
-                      <i className="glyphicon glyphicon-trash"></i>
+                      <Glyphicon glyph="trash" />
               </Button>
             </td>
           </tr>
