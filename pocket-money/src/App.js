@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { Button } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
-import { FormGroup } from 'react-bootstrap';
-import { Table } from 'react-bootstrap';
-import { Glyphicon } from 'react-bootstrap';
+import { 
+   Button,Glyphicon,Radio
+  ,Form,FormGroup,Table
+  ,Grid,Row,Col
+} from 'react-bootstrap';
+
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+
 
 class MyConst {
   static get KEY_STRAGE(){
@@ -25,7 +27,7 @@ class App extends Component {
     let myJsonObj = this.loadDB();
     this.state = {
       myJsonObj:myJsonObj
-    }
+    };
   }
 
   getInitialState(){
@@ -78,7 +80,7 @@ class App extends Component {
   loadDB = () => {
     
     // localStorageの初期化 todo:コメントアウト
-    // window.localStorage.clear();
+    //window.localStorage.clear();
     
     let jsonObj = JSON.parse(window.localStorage.getItem(MyConst.KEY_STRAGE));
 
@@ -135,6 +137,10 @@ class MyInput extends React.Component {
     this.setState({inputDate:"",inputItem:"",inputPrice:""});
   }
   
+  onChageRaido = (event) => {
+    this.setState({inputItem:event.currentTarget.value});
+  }
+  
   // 日付を文字列変換
   formatDate = (date, format) => {
     date = new Date(date);
@@ -147,43 +153,48 @@ class MyInput extends React.Component {
   render(){
     return (
         <div className="myRegion">
-          <Form inline>
-            <FormGroup>
-{/*              
-              <label for="date">日付</label>
-              <input type="text" className="form-control" id="date"
-                                placeholder="20170917" name="inputDate"
-                                value={this.state.inputDate} onChange={this.handleInputChange}/>
-*/}
-              <DatePicker
-                selected={this.state.inputDate2}
-                onChange={this.handleInputChange2}
-                locale="ja"
-                dateFormat="YYYY/MM/DD"
-                todayButton={"今日"}
-                placeholderText="クリックして選択"
-                isClearable={true}
-                inline
-              />
-            </FormGroup>
-            <FormGroup>
-              <label for="item">品目</label>
-              <input type="text" className="form-control" id="item"
-                                 placeholder="食品" name="inputItem" 
-                                 value={this.state.inputItem} onChange={this.handleInputChange}/>
-            </FormGroup>
-            <FormGroup>
-              <label for="price">金額（円）</label>
-              <input type="text" className="form-control" id="price"
-                                 placeholder="1000" name="inputPrice" 
-                                 value={this.state.inputPrice} onChange={this.handleInputChange}/>
-            </FormGroup>
-            <FormGroup>
-              <Button type="button" className="btnAdd" bsStyle="success" 
-                                    onClick={this.onClickButton}>
-                <Glyphicon glyph="plus" />追加</Button>
-            </FormGroup>
-          </Form>
+          <Grid>
+            <Row>
+              <Col xs={4} md={4}>
+                <FormGroup>
+                  <DatePicker
+                    selected={this.state.inputDate2}
+                    onChange={this.handleInputChange2}
+                    locale="ja"
+                    dateFormat="YYYY/MM/DD"
+                    todayButton={"今日"}
+                    placeholderText="クリックして選択"
+                    isClearable={true}
+                    inline
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs={4} md={4}>
+                <FormGroup>
+                  <Radio name="item" onChange={this.onChageRaido} value="おやつ">おやつ</Radio>
+                  <Radio name="item" onChange={this.onChageRaido} value="文具">文具</Radio>
+                  <Radio name="item" onChange={this.onChageRaido} value="本">本</Radio>
+                  <Radio name="item" onChange={this.onChageRaido} value="雑貨">雑貨</Radio>
+                </FormGroup>
+              </Col>
+              <Col xs={4} md={4}>
+                <Form inline>
+                  <FormGroup>
+                    <label for="price">金額（円）</label>
+                    <input type="text" className="form-control" id="price"
+                                       placeholder="1000" name="inputPrice" 
+                                       value={this.state.inputPrice} onChange={this.handleInputChange}/>
+                  </FormGroup>
+                  <FormGroup>
+                    <Button type="button" className="btnAdd" bsStyle="success" 
+                                          onClick={this.onClickButton}>
+                    <Glyphicon glyph="plus" />追加</Button>
+                  </FormGroup>
+                </Form>
+
+              </Col>
+            </Row>
+          </Grid>
         </div>    
     );
   }
