@@ -7,10 +7,13 @@ import { Form } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import { Glyphicon } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
 class MyConst {
   static get KEY_STRAGE(){
-    return "teamReact"
+    return "teamReact";
   }
 }
 
@@ -19,7 +22,7 @@ class App extends Component {
   constructor(props){
     super(props);
     
-    //　一覧の初期表示
+    // 一覧の初期表示
     let myJsonObj = this.loadDB();
     this.state = {myJsonObj:myJsonObj};
   }
@@ -77,8 +80,8 @@ class App extends Component {
   // localStorageから取得
   loadDB = () => {
     
-    // localStorageの初期化
-    window.localStorage.clear();
+    // localStorageの初期化 todo:コメントアウト
+    // window.localStorage.clear();
     
     let jsonObj = JSON.parse(window.localStorage.getItem(MyConst.KEY_STRAGE));
 
@@ -86,12 +89,12 @@ class App extends Component {
       // localStorageが初期状態の場合はサンプルを表示
       let myJsonObj = {};
       myJsonObj.person = [
-                   {"key":"0","date":"20170917","item":"KitKat(岩泉ヨーグルト味)","price":500}
-                  ,{"key":"0","date":"20170917","item":"短角牛","price":2000}
-                  ,{"key":"0","date":"20170917","item":"じゃがいも","price":300}
+                   {"key":"0","date":"2017/09/17","item":"KitKat(岩泉ヨーグルト味)","price":500}
+                  ,{"key":"0","date":"2017/09/17","item":"短角牛","price":2000}
+                  ,{"key":"0","date":"2017/09/17","item":"じゃがいも","price":300}
                   ];
-      myJsonObj.person.push({"key":"0","date":"20170924","item":"ワイン","price":1200});
-      myJsonObj.person.push({"key":"0","date":"20170924","item":"ワイン","price":1200});
+      myJsonObj.person.push({"key":"0","date":"2017/09/24","item":"ワイン","price":1200});
+      myJsonObj.person.push({"key":"0","date":"2017/09/24","item":"ワイン","price":1200});
       myJsonObj.person.splice(4,1);
 
       jsonObj = myJsonObj;
@@ -109,25 +112,39 @@ class MyInput extends React.Component {
   constructor(props){
     super(props);
     this.state = {inputDate:"", inputItem:"", inputPrice:""};
+    this.state = {inputDate2:moment()};
   }
   
   handleInputChange = (event) => {
     const target = event.target;
     const value = target.value;
-    const name = target.name
+    const name = target.name;
     this.setState({[name]:value});
+  }
+  
+  handleInputChange2 = (date) => {
+    this.setState({inputDate2:date});
   }
   
   onClickButton = (event) => {
     event.preventDefault();
     // 入力値を一覧に反映
     let obj = {"key":"0"
-              ,"date":this.state.inputDate
+              ,"date":this.formatDate(this.state.inputDate2,'yyyy/MM/dd')// todo:文字列に変換する！
               ,"item":this.state.inputItem
-              ,"price":this.state.inputPrice}
+              ,"price":this.state.inputPrice};
     this.props.onClickBtnAdd(obj);
     // 入力欄のクリア
     this.setState({inputDate:"",inputItem:"",inputPrice:""});
+  }
+  
+  // 日付を文字列変換
+  formatDate = (date, format) => {
+    date = new Date(date);
+    format = format.replace(/yyyy/g, date.getFullYear());
+    format = format.replace(/MM/g, ('0'+(date.getMonth()+1)).slice(-2));
+    format = format.replace(/dd/g, ('0'+date.getDate()).slice(-2));
+    return format;
   }
   
   render(){
@@ -135,10 +152,22 @@ class MyInput extends React.Component {
         <div className="myRegion">
           <Form inline>
             <FormGroup>
+{/*              
               <label for="date">日付</label>
               <input type="text" className="form-control" id="date"
-                                 placeholder="20170917" name="inputDate"
-                                 value={this.state.inputDate} onChange={this.handleInputChange}/>
+                                placeholder="20170917" name="inputDate"
+                                value={this.state.inputDate} onChange={this.handleInputChange}/>
+*/}
+              <DatePicker
+                selected={this.state.inputDate2}
+                onChange={this.handleInputChange2}
+                locale="ja"
+                dateFormat="YYYY/MM/DD"
+                todayButton={"今日"}
+                placeholderText="クリックして選択"
+                isClearable={true}
+                inline
+              />
             </FormGroup>
             <FormGroup>
               <label for="item">品目</label>
@@ -163,7 +192,7 @@ class MyInput extends React.Component {
   }
 }
 
-//　一覧表示コンポーネント
+// 一覧表示コンポーネント
 class MyList extends React.Component {
   
   render(){
