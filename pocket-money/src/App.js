@@ -1,16 +1,22 @@
-import React, { Component } from 'react';
 import './App.css';
-
-import { 
-   Button,Glyphicon,Radio
-  ,Form,FormGroup,Table
-  ,Grid,Row,Col
-} from 'react-bootstrap';
-
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import {
+   Button,
+   Col,
+   Form,
+   FormGroup,
+   Glyphicon,
+   Grid,
+   Radio,
+   Row,
+   Table
+} from 'react-bootstrap';
+import React, { Component } from 'react';
+
+import DatePicker from 'react-datepicker';
+import MyGraph from './MyGraph.js';
+import moment from 'moment';
 
 class MyConst {
   static get KEY_STRAGE(){
@@ -42,10 +48,11 @@ class App extends Component {
       <div className="App">
 
         <MyInput onClickBtnAdd={this.onClickBtnAdd}/>
-              
-        <MyList myJsonObj={this.state.myJsonObj}
-                onClickBtnDel={this.onClickBtnDel}/>
-      
+
+        <MyGraph />
+
+        <MyList myJsonObj={this.state.myJsonObj} onClickBtnDel={this.onClickBtnDel}/>
+
       </div>
 
     );
@@ -99,8 +106,8 @@ class App extends Component {
       jsonObj = myJsonObj;
     }
 
-  return jsonObj;
-  
+    return jsonObj;
+
   }
   
 }
