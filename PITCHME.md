@@ -54,8 +54,11 @@ https://pocket-money-db9fb.firebaseapp.com/
 ## Slack
 <img src="https://github.com/acekk619/teamReact/blob/master/Picture/slack.png?raw=true" width="800">
 ---
-## GitHub
+## GitHub　コード管理
 ![GitHub](https://github.com/acekk619/teamReact/blob/master/Picture/github.png?raw=true)
+---
+## GitHub　ドキュメント管理
+![GitHub](https://github.com/acekk619/teamReact/blob/master/Picture/deploy.png?raw=true)
 ---
 ## Cloud9
 ![Cloud9](https://github.com/acekk619/teamReact/blob/master/Picture/cloud9.png?raw=true)
