@@ -1,16 +1,10 @@
 import './App.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import {
-   Button,
-   Col,
-   Form,
-   FormGroup,
-   Glyphicon,
-   Grid,
-   Radio,
-   Row,
-   Table
+import { 
+   Button,Glyphicon,Radio
+  ,FormGroup,Table
+  ,Grid,Row,Col
 } from 'react-bootstrap';
 import React, { Component } from 'react';
 
@@ -74,6 +68,7 @@ class App extends Component {
   onClickBtnAdd = (obj) => {
     let tmpObj=this.state.myJsonObj;
     tmpObj.person.push(obj);
+    console.log(tmpObj)
     this.setState({myJsonObj:tmpObj});
     this.updateDB(tmpObj);
   }
@@ -89,7 +84,8 @@ class App extends Component {
   // localStorageへの保存
   updateDB = (jsonObj) => {
     //window.localStorage.setItem(MyConst.KEY_STRAGE,JSON.stringify(jsonObj));
-    firebaseDb.ref('main').set(JSON.stringify(jsonObj));
+    // firebaseDb.ref('main').set(JSON.stringify(jsonObj));
+     firebaseDb.ref('main').set(jsonObj);
   }
 
   // localStorageから取得
@@ -132,6 +128,7 @@ class MyInput extends React.Component {
   }
   
   handleInputChange = (event) => {
+    event.preventDefault();
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -194,31 +191,24 @@ class MyInput extends React.Component {
                   <Radio name="item" onChange={this.onChageRaido} value="文具">文具</Radio>
                   <Radio name="item" onChange={this.onChageRaido} value="本">本</Radio>
                   <Radio name="item" onChange={this.onChageRaido} value="雑貨">雑貨</Radio>
-                  </FormGroup>
-                </Col>
-                <Col xs={5} md={5}>
-                  <Form inline>
-                    <FormGroup>
-                      <label for="price">金額（円）</label>
-                      <input type="text" className="form-control" id="price"
-                                       placeholder="1000" name="inputPrice" 
-                                       value={this.state.inputPrice} onChange={this.handleInputChange}/>
-                    </FormGroup>
-                    <FormGroup>
-                      <Button type="button" className="btnAdd" bsStyle="success" 
-                                          onClick={this.onClickButton}>
-                      <Glyphicon glyph="plus" />追加</Button>
-                    </FormGroup>
-                  </Form>
-                </Col>
-              </Row>
-            </Col>
-            <Col xs={6} md={6}>
-              <MyGraph />
-            </Col>
-          </Row>
-        </Grid>
-      </div>    
+                </FormGroup>
+              </Col>
+              <Col xs={4} md={4}>
+                <FormGroup>
+                  <label for="price">金額（円）</label>
+                  <input type="number" className="form-control" id="price"
+                                     placeholder="1000" name="inputPrice" 
+                                     value={this.state.inputPrice} onChange={this.handleInputChange}/>
+                </FormGroup>
+                <FormGroup>
+                  <Button type="button" className="btnAdd" bsStyle="success" 
+                                        onClick={this.onClickButton}>
+                  <Glyphicon glyph="plus" />追加</Button>
+                </FormGroup>
+              </Col>
+            </Row>
+          </Grid>
+        </div>    
     );
   }
 }
