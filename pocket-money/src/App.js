@@ -73,7 +73,7 @@ class App extends Component {
   // コールバック関数：追加ボタン
   onClickBtnAdd = (obj) => {
     let tmpObj = this.state.myJsonObj;
-    tmpObj.person.push(obj);
+    tmpObj.person.unshift(obj);
     console.log(tmpObj)
     this.setState({ myJsonObj: tmpObj });
     this.updateDB(tmpObj);
