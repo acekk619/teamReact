@@ -43,3 +43,7 @@ Firebaseを利用したReactお小遣い帳アプリを考案してみたんだ�
 
 ## アプリ公開
 https://pocket-money-db9fb.firebaseapp.com/
+
+
+## Slack
+![Slack](https://github.com/acekk619/teamReact/blob/master/Picture/FireBase.png)
