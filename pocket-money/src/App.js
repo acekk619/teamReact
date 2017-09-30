@@ -16,31 +16,46 @@ import React, { Component } from 'react';
 
 import DatePicker from 'react-datepicker';
 import MyGraph from './MyGraph.js';
+import { firebaseDb } from './firebase';
 import moment from 'moment';
 
-class MyConst {
-  static get KEY_STRAGE(){
-    return "teamReact";
-  }
-}
+// class MyConst {
+//   static get KEY_STRAGE(){
+//     return "teamReact";
+//   }
+// }
 
 class App extends Component {
 
   constructor(props){
     super(props);
     
-    // 一覧の初期表示
+    //一覧の初期表示
     let myJsonObj = this.loadDB();
     this.state = {
       myJsonObj:myJsonObj
     };
+    
+  }
+  
+  componentWillMount(){
+    //alert('Will')
+    firebaseDb.ref('main').once('value').then((snapshot)=>{
+      if (snapshot.exists()){
+        console.log(snapshot.val())
+        this.setState({
+          myJsonObj:JSON.parse(snapshot.val())
+        });
+      }
+    });
+
   }
 
-  getInitialState(){
-    // これがうまく動かなかった・・・
-    // stateの初期化は
-    // constructorでやっちゃいました。
-  }
+  // getInitialState(){
+  //   // これがうまく動かなかった・・・
+  //   // stateの初期化は
+  //   // constructorでやっちゃいました。
+  // }
 
   render() {
     return (
@@ -73,16 +88,18 @@ class App extends Component {
   
   // localStorageへの保存
   updateDB = (jsonObj) => {
-    window.localStorage.setItem(MyConst.KEY_STRAGE,JSON.stringify(jsonObj));
+    //window.localStorage.setItem(MyConst.KEY_STRAGE,JSON.stringify(jsonObj));
+    firebaseDb.ref('main').set(JSON.stringify(jsonObj));
   }
 
   // localStorageから取得
   loadDB = () => {
     
     // localStorageの初期化 todo:コメントアウト
-    //window.localStorage.clear();
+    // window.localStorage.clear();
     
-    let jsonObj = JSON.parse(window.localStorage.getItem(MyConst.KEY_STRAGE));
+    let jsonObj = null;
+    //jsonObj = JSON.parse(window.localStorage.getItem(MyConst.KEY_STRAGE));
 
     if (jsonObj == null){
       // localStorageが初期状態の場合はサンプルを表示
