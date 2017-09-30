@@ -39,8 +39,8 @@ class App extends Component {
 
   componentWillMount() {
     //alert('Will')
-    firebaseDb.ref('main').once('value').then((snapshot) => {
-      if (snapshot.exists()) {
+    firebaseDb.ref('main').on('value',(snapshot)=>{
+      if (snapshot.exists()){
         console.log(snapshot.val())
         this.setState({
           // myJsonObj:JSON.parse(snapshot.val())
@@ -156,7 +156,7 @@ class MyInput extends React.Component {
     };
     this.props.onClickBtnAdd(obj);
     // 入力欄のクリア
-    this.setState({ inputDate: "", inputItem: "", inputPrice: "" });
+    // this.setState({inputDate:"",inputItem:"",inputPrice:""});
   }
 
   onChageRaido = (event) => {

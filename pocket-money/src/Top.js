@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import autoBind from 'react-autobind'
 import { Jumbotron } from 'react-bootstrap';
 import App from './App'
+// eslint-disable-next-line
 import SignIn from './SignIn'
 import './App.css'
 
@@ -17,6 +18,7 @@ class Top extends Component {
 
   render () {
     let {
+// eslint-disable-next-line
       auth
     } = this.state
     return (
