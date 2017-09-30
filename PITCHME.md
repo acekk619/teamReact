@@ -58,7 +58,7 @@ https://pocket-money-db9fb.firebaseapp.com/
 
 ---
 ## Slack
-![Slack](https://github.com/acekk619/teamReact/blob/master/Picture/slack.png?raw=true)
+<img src="https://github.com/acekk619/teamReact/blob/master/Picture/slack.png?raw=true" width="800">
 ---
 ## GitHub
 ![GitHub](https://github.com/acekk619/teamReact/blob/master/Picture/github.png?raw=true)
