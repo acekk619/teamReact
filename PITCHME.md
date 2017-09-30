@@ -9,9 +9,9 @@ androidh
 
 ---
 ## やったこと
-*slackでコミュニケーション
-*githubでコード共有
-*Reactでアプリ作成し、Firebaseにデプロイ!
+* slackでコミュニケーション
+* githubでコード共有
+* Reactでアプリ作成し、Firebaseにデプロイ!
 
 ---
 
