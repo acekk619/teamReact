@@ -2,16 +2,15 @@ import './App.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import {
-  Button,
-  Glyphicon,
-  Radio,
-  FormGroup,
-  Table,
-  Grid,
-  Row,
-  Col
-}
-from 'react-bootstrap';
+   Button,
+   Col,
+   FormGroup,
+   Glyphicon,
+   Grid,
+   Radio,
+   Row,
+   Table
+} from 'react-bootstrap';
 import React, { Component } from 'react';
 
 import DatePicker from 'react-datepicker';
@@ -195,28 +194,33 @@ class MyInput extends React.Component {
                 </Col>
                 <Col xs={3} md={3}>
                   <FormGroup>
-                  <Radio name="item" onChange={this.onChageRaido} value="おやつ">おやつ</Radio>
-                  <Radio name="item" onChange={this.onChageRaido} value="文具">文具</Radio>
-                  <Radio name="item" onChange={this.onChageRaido} value="本">本</Radio>
-                  <Radio name="item" onChange={this.onChageRaido} value="雑貨">雑貨</Radio>
-                </FormGroup>
-              </Col>
-              <Col xs={4} md={4}>
-                <FormGroup>
-                  <label for="price">金額（円）</label>
-                  <input type="number" className="form-control" id="price"
+                    <Radio name="item" onChange={this.onChageRaido} value="おやつ">おやつ</Radio>
+                    <Radio name="item" onChange={this.onChageRaido} value="文具">文具</Radio>
+                    <Radio name="item" onChange={this.onChageRaido} value="本">本</Radio>
+                    <Radio name="item" onChange={this.onChageRaido} value="雑貨">雑貨</Radio>
+                  </FormGroup>
+                </Col>
+                <Col xs={4} md={4}>
+                  <FormGroup>
+                    <label for="price">金額（円）</label>
+                    <input type="number" className="form-control" id="price"
                                      placeholder="1000" name="inputPrice" 
                                      value={this.state.inputPrice} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup>
-                  <Button type="button" className="btnAdd" bsStyle="success" 
+                  </FormGroup>
+                  <FormGroup>
+                    <Button type="button" className="btnAdd" bsStyle="success" 
                                         onClick={this.onClickButton}>
-                  <Glyphicon glyph="plus" />追加</Button>
-                </FormGroup>
-              </Col>
-            </Row>
-          </Grid>
-        </div>
+                    <Glyphicon glyph="plus" />追加</Button>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={4} md={4}>
+              <MyGraph />
+            </Col>
+          </Row>
+        </Grid>
+      </div>    
     );
   }
 }
