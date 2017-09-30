@@ -58,4 +58,16 @@ https://pocket-money-db9fb.firebaseapp.com/
 
 ---
 ## Slack
-![Slack](https://github.com/acekk619/teamReact/blob/master/Picture/FireBase.png?raw=true)
+![Slack](https://github.com/acekk619/teamReact/blob/master/Picture/slack.png?raw=true)
+---
+## GitHub
+![GitHub](https://github.com/acekk619/teamReact/blob/master/Picture/github.png?raw=true)
+---
+## Cloud9
+![Cloud9](https://github.com/acekk619/teamReact/blob/master/Picture/cloud9.png?raw=true)
+---
+## FireBase
+![FireBase](https://github.com/acekk619/teamReact/blob/master/Picture/FireBase.png?raw=true)
+
+
+
