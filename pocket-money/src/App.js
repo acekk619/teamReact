@@ -1,17 +1,23 @@
-import React, { Component } from 'react';
 import './App.css';
-
-import { 
-   Button,Glyphicon,Radio
-  ,Form,FormGroup,Table
-  ,Grid,Row,Col
-} from 'react-bootstrap';
-
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import {
+   Button,
+   Col,
+   Form,
+   FormGroup,
+   Glyphicon,
+   Grid,
+   Radio,
+   Row,
+   Table
+} from 'react-bootstrap';
+import React, { Component } from 'react';
+
+import DatePicker from 'react-datepicker';
+import MyGraph from './MyGraph.js';
 import { firebaseDb } from './firebase';
+import moment from 'moment';
 
 // class MyConst {
 //   static get KEY_STRAGE(){
@@ -52,17 +58,11 @@ class App extends Component {
   // }
 
   render() {
-    
     return (
       <div className="App">
-
         <MyInput onClickBtnAdd={this.onClickBtnAdd}/>
-              
-        <MyList myJsonObj={this.state.myJsonObj}
-                onClickBtnDel={this.onClickBtnDel}/>
-      
+        <MyList myJsonObj={this.state.myJsonObj} onClickBtnDel={this.onClickBtnDel}/>
       </div>
-
     );
   }
   
@@ -116,8 +116,8 @@ class App extends Component {
       jsonObj = myJsonObj;
     }
 
-  return jsonObj;
-  
+    return jsonObj;
+
   }
   
 }
@@ -169,12 +169,14 @@ class MyInput extends React.Component {
   
   render(){
     return (
-        <div className="myRegion">
-          <Grid>
-            <Row>
-              <Col xs={4} md={4}>
-                <FormGroup>
-                  <DatePicker
+      <div className="myRegion">
+        <Grid>
+          <Row>
+            <Col xs={6} md={6}>
+              <Row>
+                <Col xs={4} md={4}>
+                  <FormGroup>
+                    <DatePicker
                     selected={this.state.inputDate2}
                     onChange={this.handleInputChange2}
                     locale="ja"
@@ -183,36 +185,40 @@ class MyInput extends React.Component {
                     placeholderText="クリックして選択"
                     isClearable={true}
                     inline
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs={4} md={4}>
-                <FormGroup>
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs={3} md={3}>
+                  <FormGroup>
                   <Radio name="item" onChange={this.onChageRaido} value="おやつ">おやつ</Radio>
                   <Radio name="item" onChange={this.onChageRaido} value="文具">文具</Radio>
                   <Radio name="item" onChange={this.onChageRaido} value="本">本</Radio>
                   <Radio name="item" onChange={this.onChageRaido} value="雑貨">雑貨</Radio>
-                </FormGroup>
-              </Col>
-              <Col xs={4} md={4}>
-                <Form inline>
-                  <FormGroup>
-                    <label for="price">金額（円）</label>
-                    <input type="text" className="form-control" id="price"
+                  </FormGroup>
+                </Col>
+                <Col xs={5} md={5}>
+                  <Form inline>
+                    <FormGroup>
+                      <label for="price">金額（円）</label>
+                      <input type="text" className="form-control" id="price"
                                        placeholder="1000" name="inputPrice" 
                                        value={this.state.inputPrice} onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Button type="button" className="btnAdd" bsStyle="success" 
+                    </FormGroup>
+                    <FormGroup>
+                      <Button type="button" className="btnAdd" bsStyle="success" 
                                           onClick={this.onClickButton}>
-                    <Glyphicon glyph="plus" />追加</Button>
-                  </FormGroup>
-                </Form>
-
-              </Col>
-            </Row>
-          </Grid>
-        </div>    
+                      <Glyphicon glyph="plus" />追加</Button>
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={6} md={6}>
+              <MyGraph />
+            </Col>
+          </Row>
+        </Grid>
+      </div>    
     );
   }
 }
