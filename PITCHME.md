@@ -19,9 +19,9 @@ androidh
 ## Firebase紹介
 * Google提供のMBaas
 * 使った機能
-** リアルタイムDB
-** ホスティング
-** 認証（これから。。。）
+- リアルタイムDB
+- ホスティング
+- 認証（これから。。。）
 
 https://firebase.google.com/?hl=ja
 
