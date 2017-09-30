@@ -43,7 +43,8 @@ class App extends Component {
       if (snapshot.exists()) {
         console.log(snapshot.val())
         this.setState({
-          myJsonObj: JSON.parse(snapshot.val())
+          // myJsonObj:JSON.parse(snapshot.val())
+          myJsonObj:snapshot.val()
         });
       }
     });

@@ -27,11 +27,7 @@ class Top extends Component {
         </Jumbotron>
         
         <div className='App-main'>
-          {
-            auth
-            ? <App />
-            : <SignIn />
-          }
+          <App />
         </div>
       </div>
     )
