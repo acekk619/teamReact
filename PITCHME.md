@@ -18,4 +18,7 @@ androidh
 ## アプリ名
 Firebaseを利用したReactお小遣い帳アプリを考案してみたんだが
 
+---
+##　Slack
+![Slack](./Picture/slack.png)
 
