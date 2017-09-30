@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
 import './App.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { 
    Button,Glyphicon,Radio
   ,FormGroup,Table
   ,Grid,Row,Col
 } from 'react-bootstrap';
+import React, { Component } from 'react';
 
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import 'react-datepicker/dist/react-datepicker.css';
-
+import MyGraph from './MyGraph.js';
 import { firebaseDb } from './firebase';
+import moment from 'moment';
 
 // class MyConst {
 //   static get KEY_STRAGE(){
@@ -52,17 +52,11 @@ class App extends Component {
   // }
 
   render() {
-    
     return (
       <div className="App">
-
         <MyInput onClickBtnAdd={this.onClickBtnAdd}/>
-              
-        <MyList myJsonObj={this.state.myJsonObj}
-                onClickBtnDel={this.onClickBtnDel}/>
-      
+        <MyList myJsonObj={this.state.myJsonObj} onClickBtnDel={this.onClickBtnDel}/>
       </div>
-
     );
   }
   
@@ -118,8 +112,8 @@ class App extends Component {
       jsonObj = myJsonObj;
     }
 
-  return jsonObj;
-  
+    return jsonObj;
+
   }
   
 }
@@ -172,12 +166,14 @@ class MyInput extends React.Component {
   
   render(){
     return (
-        <div className="myRegion">
-          <Grid>
-            <Row>
-              <Col xs={4} md={4}>
-                <FormGroup>
-                  <DatePicker
+      <div className="myRegion">
+        <Grid>
+          <Row>
+            <Col xs={6} md={6}>
+              <Row>
+                <Col xs={4} md={4}>
+                  <FormGroup>
+                    <DatePicker
                     selected={this.state.inputDate2}
                     onChange={this.handleInputChange2}
                     locale="ja"
@@ -186,11 +182,11 @@ class MyInput extends React.Component {
                     placeholderText="クリックして選択"
                     isClearable={true}
                     inline
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs={4} md={4}>
-                <FormGroup>
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs={3} md={3}>
+                  <FormGroup>
                   <Radio name="item" onChange={this.onChageRaido} value="おやつ">おやつ</Radio>
                   <Radio name="item" onChange={this.onChageRaido} value="文具">文具</Radio>
                   <Radio name="item" onChange={this.onChageRaido} value="本">本</Radio>
