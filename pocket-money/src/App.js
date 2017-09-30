@@ -3,7 +3,7 @@ import './App.css';
 
 import { 
    Button,Glyphicon,Radio
-  ,Form,FormGroup,Table
+  ,FormGroup,Table
   ,Grid,Row,Col
 } from 'react-bootstrap';
 
@@ -74,6 +74,7 @@ class App extends Component {
   onClickBtnAdd = (obj) => {
     let tmpObj=this.state.myJsonObj;
     tmpObj.person.push(obj);
+    console.log(tmpObj)
     this.setState({myJsonObj:tmpObj});
     this.updateDB(tmpObj);
   }
@@ -89,7 +90,8 @@ class App extends Component {
   // localStorageへの保存
   updateDB = (jsonObj) => {
     //window.localStorage.setItem(MyConst.KEY_STRAGE,JSON.stringify(jsonObj));
-    firebaseDb.ref('main').set(JSON.stringify(jsonObj));
+    // firebaseDb.ref('main').set(JSON.stringify(jsonObj));
+     firebaseDb.ref('main').set(jsonObj);
   }
 
   // localStorageから取得
@@ -132,6 +134,7 @@ class MyInput extends React.Component {
   }
   
   handleInputChange = (event) => {
+    event.preventDefault();
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -195,20 +198,17 @@ class MyInput extends React.Component {
                 </FormGroup>
               </Col>
               <Col xs={4} md={4}>
-                <Form inline>
-                  <FormGroup>
-                    <label for="price">金額（円）</label>
-                    <input type="text" className="form-control" id="price"
-                                       placeholder="1000" name="inputPrice" 
-                                       value={this.state.inputPrice} onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Button type="button" className="btnAdd" bsStyle="success" 
-                                          onClick={this.onClickButton}>
-                    <Glyphicon glyph="plus" />追加</Button>
-                  </FormGroup>
-                </Form>
-
+                <FormGroup>
+                  <label for="price">金額（円）</label>
+                  <input type="number" className="form-control" id="price"
+                                     placeholder="1000" name="inputPrice" 
+                                     value={this.state.inputPrice} onChange={this.handleInputChange}/>
+                </FormGroup>
+                <FormGroup>
+                  <Button type="button" className="btnAdd" bsStyle="success" 
+                                        onClick={this.onClickButton}>
+                  <Glyphicon glyph="plus" />追加</Button>
+                </FormGroup>
               </Col>
             </Row>
           </Grid>
