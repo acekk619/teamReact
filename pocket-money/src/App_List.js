@@ -8,10 +8,10 @@ class MyList extends React.Component {
 
     let listItems = "";
     if (this.props.myJsonObj != null) {
-      listItems = this.props.myJsonObj.person.map((item, index) =>
+      listItems = this.props.myJsonObj.map((item, index) =>
         <tr key={index}>
             <td>{item.date}</td>
-            <td>{item.item}</td>
+            <td>{item.category_name}</td>
             <td>{item.price}</td>
             <td>
               <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
