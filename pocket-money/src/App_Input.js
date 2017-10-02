@@ -23,8 +23,8 @@ class MyInput extends React.Component {
 
   // 変更イベント：カテゴリ
   onChageRaido = (event) => {
-    this.setState({ inputCategory_id: event.currentTarget.value
-                   ,inputCategory_name: event.currentTarget.name});
+    this.setState({ inputCategory_id: event.currentTarget.value.substr(0,2)
+                   ,inputCategory_name: event.currentTarget.value.substr(2)});
   }
 
   // 変更イベント：金額
@@ -84,10 +84,10 @@ class MyInput extends React.Component {
                 </Col>
                 <Col xs={3} md={3}>
                   <FormGroup>
-                    <Radio onChange={this.onChageRaido} value="0" name="お菓子">お菓子</Radio>
-                    <Radio onChange={this.onChageRaido} value="1" name="本">本</Radio>
-                    <Radio onChange={this.onChageRaido} value="2" name="文具">文具</Radio>
-                    <Radio onChange={this.onChageRaido} value="3" name="雑貨">雑貨</Radio>
+                    <Radio onChange={this.onChageRaido} value="00お菓子" name="item">お菓子</Radio>
+                    <Radio onChange={this.onChageRaido} value="01本" name="item">本</Radio>
+                    <Radio onChange={this.onChageRaido} value="02文具" name="item">文具</Radio>
+                    <Radio onChange={this.onChageRaido} value="03雑貨" name="item">雑貨</Radio>
                   </FormGroup>
                 </Col>
                 <Col xs={4} md={4}>
