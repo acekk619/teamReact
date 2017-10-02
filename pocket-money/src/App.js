@@ -14,13 +14,14 @@ class App extends Component {
     // 一覧の初期表示
     let myJsonObj = this.loadDB();
     this.state = {
-      myJsonObj: myJsonObj
+      myUserId: 'user01'
+     ,myJsonObj: myJsonObj
     };
   }
 
   componentWillMount() {
-    // 
-    firebaseDb.ref('main').on('value',(snapshot)=>{
+    // データ取得：メイン
+    firebaseDb.ref('main/'+this.state.myUserId).on('value',(snapshot)=>{
       if (snapshot.exists()){
         this.setState({
           // myJsonObj:JSON.parse(snapshot.val())
@@ -53,7 +54,7 @@ class App extends Component {
   // コールバック関数：追加ボタン
   onClickBtnAdd = (obj) => {
     let tmpObj = this.state.myJsonObj;
-    tmpObj.person.unshift(obj);
+    tmpObj.unshift(obj);
     this.setState({ myJsonObj: tmpObj });
     this.updateDB(tmpObj);
   }
@@ -61,7 +62,7 @@ class App extends Component {
   // コールバック関数：削除ボタン
   onClickBtnDel = (index) => {
     let tmpObj = this.state.myJsonObj;
-    tmpObj.person.splice(index, 1);
+    tmpObj.splice(index, 1);
     this.setState({ myJsonObj: tmpObj });
     this.updateDB(tmpObj);
   }
@@ -70,7 +71,7 @@ class App extends Component {
   updateDB = (jsonObj) => {
     //window.localStorage.setItem(MyConst.KEY_STRAGE,JSON.stringify(jsonObj));
     // firebaseDb.ref('main').set(JSON.stringify(jsonObj));
-    firebaseDb.ref('main').set(jsonObj);
+    firebaseDb.ref('main/'+this.state.myUserId).set(jsonObj);
   }
 
   // DBから取得
@@ -83,16 +84,12 @@ class App extends Component {
     //jsonObj = JSON.parse(window.localStorage.getItem(MyConst.KEY_STRAGE));
 
     if (jsonObj == null) {
-      // localStorageが初期状態の場合はサンプルを表示
-      let myJsonObj = {};
-      myJsonObj.person = [
-        { "key": "0", "date": "2017/09/17", "item": "KitKat(岩泉ヨーグルト味)", "price": 500 }, { "key": "0", "date": "2017/09/17", "item": "短角牛", "price": 2000 }, { "key": "0", "date": "2017/09/17", "item": "じゃがいも", "price": 300 }
+      // データがない場合はサンプルを表示
+      jsonObj = [
+          { "date": "2017/09/17", "category_id": "99", "category_name": "KitKat(岩泉ヨーグルト味)", "price": 500 }
+        , { "date": "2017/09/17", "category_id": "98", "category_name": "短角牛", "price": 2000 }
+        , { "date": "2017/09/17", "category_id": "97", "category_name": "じゃがいも", "price": 300 }
       ];
-      myJsonObj.person.push({ "key": "0", "date": "2017/09/24", "item": "ワイン", "price": 1200 });
-      myJsonObj.person.push({ "key": "0", "date": "2017/09/24", "item": "ワイン", "price": 1200 });
-      myJsonObj.person.splice(4, 1);
-
-      jsonObj = myJsonObj;
     }
     return jsonObj;
   }

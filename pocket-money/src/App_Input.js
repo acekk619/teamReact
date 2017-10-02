@@ -10,10 +10,24 @@ class MyInput extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { inputDate: "", inputItem: "", inputPrice: "" };
-    this.state = { inputDate2: moment() };
+    this.state = { inputDate: moment()
+                 , inputCategory_id: ""
+                 , inputCategory_name: ""
+                 , inputPrice: "" };
   }
 
+  // 変更イベント：日付
+  handleInputChange2 = (date) => {
+    this.setState({ inputDate: date });
+  }
+
+  // 変更イベント：カテゴリ
+  onChageRaido = (event) => {
+    this.setState({ inputCategory_id: event.currentTarget.value.substr(0,2)
+                   ,inputCategory_name: event.currentTarget.value.substr(2)});
+  }
+
+  // 変更イベント：金額
   handleInputChange = (event) => {
     event.preventDefault();
     const target = event.target;
@@ -23,27 +37,19 @@ class MyInput extends React.Component {
       [name]: value });
   }
 
-  handleInputChange2 = (date) => {
-    this.setState({ inputDate2: date });
-  }
-
+  // クリックイベント：追加
   onClickButton = (event) => {
     event.preventDefault();
     // 入力値を一覧に反映
     let obj = {
-      "key": "0",
-      "date": this.formatDate(this.state.inputDate2, 'yyyy/MM/dd') // todo:文字列に変換する！
-        ,
-      "item": this.state.inputItem,
+      "date": this.formatDate(this.state.inputDate, 'yyyy/MM/dd'),
+      "category_id": this.state.inputCategory_id,
+      "category_name": this.state.inputCategory_name,
       "price": this.state.inputPrice
     };
     this.props.onClickBtnAdd(obj);
     // 入力欄のクリア
-    // this.setState({inputDate:"",inputItem:"",inputPrice:""});
-  }
-
-  onChageRaido = (event) => {
-    this.setState({ inputItem: event.currentTarget.value });
+    // this.setState({inputDate:"",inputCategory_id:"",inputPrice:""});
   }
 
   // 日付を文字列変換
@@ -65,7 +71,7 @@ class MyInput extends React.Component {
                 <Col xs={4} md={4}>
                   <FormGroup>
                     <DatePicker
-                    selected={this.state.inputDate2}
+                    selected={this.state.inputDate}
                     onChange={this.handleInputChange2}
                     locale="ja"
                     dateFormat="YYYY/MM/DD"
@@ -78,10 +84,10 @@ class MyInput extends React.Component {
                 </Col>
                 <Col xs={3} md={3}>
                   <FormGroup>
-                    <Radio name="item" onChange={this.onChageRaido} value="おやつ">おやつ</Radio>
-                    <Radio name="item" onChange={this.onChageRaido} value="文具">文具</Radio>
-                    <Radio name="item" onChange={this.onChageRaido} value="本">本</Radio>
-                    <Radio name="item" onChange={this.onChageRaido} value="雑貨">雑貨</Radio>
+                    <Radio onChange={this.onChageRaido} value="00お菓子" name="item">お菓子</Radio>
+                    <Radio onChange={this.onChageRaido} value="01本" name="item">本</Radio>
+                    <Radio onChange={this.onChageRaido} value="02文具" name="item">文具</Radio>
+                    <Radio onChange={this.onChageRaido} value="03雑貨" name="item">雑貨</Radio>
                   </FormGroup>
                 </Col>
                 <Col xs={4} md={4}>
@@ -89,7 +95,8 @@ class MyInput extends React.Component {
                     <label for="price">金額（円）</label>
                     <input type="number" className="form-control" id="price"
                                      placeholder="1000" name="inputPrice" 
-                                     value={this.state.inputPrice} onChange={this.handleInputChange}/>
+                                     value={this.state.inputPrice} onChange={this.handleInputChange}
+                                      />
                   </FormGroup>
                   <FormGroup>
                     <Button type="button" className="btnAdd" bsStyle="success" 
