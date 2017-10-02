@@ -30,7 +30,7 @@ class MyList extends React.Component {
           <thead>
             <tr>
               <th>日付</th>
-              <th>品目</th>
+              <th>費目</th>
               <th>金額（円）</th>
               <th>削除</th>
             </tr>
