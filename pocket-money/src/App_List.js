@@ -17,7 +17,7 @@ class MyList extends React.Component {
               <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
                       onClick={this.onClickButton}
                       name={index}>
-                      <Glyphicon glyph="trash" />
+                      <Glyphicon glyph="trash"/>
               </Button>
             </td>
           </tr>
@@ -44,8 +44,15 @@ class MyList extends React.Component {
   onClickButton = (event) => {
     event.preventDefault();
     // 行削除
-    let index = event.target.name;
-    this.props.onClickBtnDel(index);
+    let index = -1;
+    if(event.target.type==="button"){
+      index = event.target.name;
+    } else {
+      index = event.target.parentNode.name;
+    }
+    if (index !== -1) {
+      this.props.onClickBtnDel(index);
+    }
   }
 
 }
