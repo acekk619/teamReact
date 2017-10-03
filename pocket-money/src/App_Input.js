@@ -3,7 +3,7 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import MyGraph from './MyGraph.js';
 import { FormGroup, Button, Glyphicon, Radio,
-         Grid, Row, Col } from 'react-bootstrap';
+         Grid, Row, Col ,Alert } from 'react-bootstrap';
 
 // 入力コンポーネント
 class MyInput extends React.Component {
@@ -13,7 +13,9 @@ class MyInput extends React.Component {
     this.state = { inputDate: moment()
                  , inputCategory_id: ""
                  , inputCategory_name: ""
-                 , inputPrice: "" };
+                 , inputPrice: "" 
+                 , myMessage:""
+    };
   }
 
   // 変更イベント：日付
@@ -40,6 +42,15 @@ class MyInput extends React.Component {
   // クリックイベント：追加
   onClickButton = (event) => {
     event.preventDefault();
+    
+    // 入力チェック
+    if (this.checkInput()===false) {
+      return;
+    } else {
+      // エラーメッセージのクリア
+      this.setState({myMessage:''});
+    }
+    
     // 入力値を一覧に反映
     let obj = {
       "date": this.formatDate(this.state.inputDate, 'yyyy/MM/dd'),
@@ -48,8 +59,27 @@ class MyInput extends React.Component {
       "price": this.state.inputPrice
     };
     this.props.onClickBtnAdd(obj);
+    
     // 入力欄のクリア
     // this.setState({inputDate:"",inputCategory_id:"",inputPrice:""});
+    
+  }
+
+  // 入力チェック
+  checkInput = () => {
+    // 費目
+    if (this.state.inputCategory_id==='') {
+      //alert('費目を選択してください。');
+      this.setState({myMessage:'：「費目」を選択してください。'});
+      return false;
+    }
+    // 金額
+    if (this.state.inputPrice==='') {
+      //alert('金額を入力してください。');
+      this.setState({myMessage:'：「金額」を入力してください。'});
+      return false;
+    }
+    return true;    
   }
 
   // 日付を文字列変換
@@ -62,8 +92,20 @@ class MyInput extends React.Component {
   }
 
   render() {
+    
+    let alertMessage = null;
+    if (this.state.myMessage !== '') {
+      alertMessage = <Alert bsStyle="danger">
+                      <strong>入力チェックエラー</strong>
+                      {this.state.myMessage}
+                     </Alert>;
+    }
+    
     return (
       <div className="myRegion">
+
+        {alertMessage}
+        
         <Grid>
           <Row>
             <Col xs={6} md={6}>
