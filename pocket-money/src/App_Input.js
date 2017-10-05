@@ -2,7 +2,8 @@ import React from 'react';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import MyGraph from './MyGraph.js';
-import { FormGroup, Button, Glyphicon, Radio,
+import MyHimokuSelect from './MyHimokuSelect.js';
+import { FormGroup, Button, Glyphicon,
          Grid, Row, Col ,Alert } from 'react-bootstrap';
 
 // 入力コンポーネント
@@ -121,12 +122,7 @@ class MyInput extends React.Component {
               </FormGroup>
             </Col>
             <Col xs={6} md={3}>
-              <FormGroup>
-                <Radio onChange={this.onChageRaido} value="00お菓子" name="item">お菓子</Radio>
-                <Radio onChange={this.onChageRaido} value="01本" name="item">本</Radio>
-                <Radio onChange={this.onChageRaido} value="02文具" name="item">文具</Radio>
-                <Radio onChange={this.onChageRaido} value="03雑貨" name="item">雑貨</Radio>
-              </FormGroup>
+              <MyHimokuSelect onChageRaido={this.onChageRaido}/>
             </Col>
             <Col xs={6} md={3}>
               <FormGroup>
