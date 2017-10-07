@@ -41,7 +41,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MyInput onClickBtnAdd={this.onClickBtnAdd}/>
+        <MyInput onClickBtnAdd={this.onClickBtnAdd} myUserId={this.state.myUserId}/>
         <MyList myJsonObj={this.state.myJsonObj} onClickBtnDel={this.onClickBtnDel}/>
       </div>
     );

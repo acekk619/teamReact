@@ -122,7 +122,7 @@ class MyInput extends React.Component {
               </FormGroup>
             </Col>
             <Col xs={6} md={3}>
-              <MyHimokuSelect onChageRaido={this.onChageRaido}/>
+              <MyHimokuSelect onChageRaido={this.onChageRaido} myUserId={this.props.myUserId}/>
             </Col>
             <Col xs={6} md={3}>
               <FormGroup>
