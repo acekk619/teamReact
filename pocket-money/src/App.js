@@ -39,7 +39,6 @@ class App extends Component {
         });
       }
     });
-
   }
 
   // getInitialState(){
@@ -66,13 +65,16 @@ class App extends Component {
       case myGamen.Main:
         gmn = (
           <div>
-            <MyInput onClickBtnAdd={this.onClickBtnAdd} myUserId={this.state.myUserId}/>
-            <MyList myJsonObj={this.state.myJsonObj} onClickBtnDel={this.onClickBtnDel}/>
+            <MyInput myUserId={this.state.myUserId}
+                     onClickBtnAdd={this.onClickBtnAdd} />
+            <MyList myJsonObj={this.state.myJsonObj}
+                    onClickBtnDel={this.onClickBtnDel} />
           </div>
         );
         break;
       case myGamen.Himoku:
-        gmn = <MyHimokuMaster />;
+        // gmn = <MyHimokuMaster myUserId={this.state.myUserId} />;
+        gmn = <MyHimokuMaster myUserId={'user02'} />;
         break;
       default:
     }

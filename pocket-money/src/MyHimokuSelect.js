@@ -14,7 +14,7 @@ class MyHimokuSelect extends React.Component {
     
     // データ作成
     // let initJsonObj = [
-    //   {'category_id':'00','category_name':'お菓子'}
+    //  {'category_id':'00','category_name':'お菓子'}
     // ,{'category_id':'01','category_name':'本'}
     // ,{'category_id':'02','category_name':'文具'}
     // ,{'category_id':'03','category_name':'雑貨'}
