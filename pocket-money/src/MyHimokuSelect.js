@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, Radio } from 'react-bootstrap';
+import { Radio, Panel } from 'react-bootstrap';
 import { firebaseDb } from './firebase';
 
 // 費目選択コンポーネント
@@ -49,7 +49,7 @@ class MyHimokuSelect extends React.Component {
     }
     
     return (
-      <FormGroup>{items}</FormGroup>
+      <Panel header='費目' bsStyle="success">{items}</Panel>
     );
   }
 }

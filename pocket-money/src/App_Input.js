@@ -3,8 +3,8 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import MyGraph from './MyGraph.js';
 import MyHimokuSelect from './MyHimokuSelect.js';
-import { FormGroup, Button, Glyphicon,
-         Grid, Row, Col ,Alert } from 'react-bootstrap';
+import { Button, Glyphicon,
+         Grid, Row, Col, Alert, Panel } from 'react-bootstrap';
 
 // 入力コンポーネント
 class MyInput extends React.Component {
@@ -108,35 +108,24 @@ class MyInput extends React.Component {
         <Grid>
           <Row>
             <Col xs={6} md={3}>
-              <FormGroup>
-                <DatePicker
-                selected={this.state.inputDate}
-                onChange={this.handleInputChange2}
-                locale="ja"
-                dateFormat="YYYY/MM/DD"
-                todayButton={"今日"}
-                placeholderText="クリックして選択"
-                isClearable={true}
-                inline
-                />
-              </FormGroup>
+              <DatePicker selected={this.state.inputDate} onChange={this.handleInputChange2}
+                          locale="ja" dateFormat="YYYY/MM/DD" todayButton={"今日"}
+                          placeholderText="クリックして選択" isClearable={true} inline />
             </Col>
             <Col xs={6} md={3}>
-              <MyHimokuSelect onChageRaido={this.onChageRaido} myUserId={this.props.myUserId}/>
+              <MyHimokuSelect onChageRaido={this.onChageRaido} myUserId={this.props.myUserId} />
             </Col>
-            <Col xs={6} md={3}>
-              <FormGroup>
-                <label for="price">金額（円）</label>
+            <Col xs={6} md={3} xsOffset={6} mdOffset={0}>
+              <Panel header='金額（円）' bsStyle="success">
                 <input type="number" className="form-control" id="price"
-                                 placeholder="1000" name="inputPrice" 
-                                 value={this.state.inputPrice} onChange={this.handleInputChange}
-                                  />
-              </FormGroup>
-              <FormGroup>
-                <Button type="button" className="btnAdd" bsStyle="success" 
-                                    onClick={this.onClickButton}>
-                <Glyphicon glyph="plus" />追加</Button>
-              </FormGroup>
+                       placeholder="1000" name="inputPrice" 
+                       value={this.state.inputPrice} onChange={this.handleInputChange} />
+              </Panel>
+            </Col>
+            <Col xs={12} md={12}>
+              <Button type="button" className="btnAdd" bsStyle="success" 
+                      block onClick={this.onClickButton}>
+              <Glyphicon glyph="plus" />追加</Button>
             </Col>
             <Col xs={12} md={12}>
               <MyGraph />
