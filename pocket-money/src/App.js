@@ -1,9 +1,18 @@
 import './App.css';
 import MyInput from './App_Input.js';
 import MyList from './App_List.js';
+import MyHimokuMaster from './MyHimokuMaster.js';
 import React, { Component } from 'react';
 import { firebaseDb } from './firebase';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Nav, NavItem } from 'react-bootstrap';
+
+// クラス定数：画面
+class myGamen {
+  static get None(){return '0'};    // 非表示
+  static get Main(){return '1'};    // お小遣い帳
+  static get Himoku(){return '2'};  // 費目マスター
+}
 
 // メイン画面
 class App extends Component {
@@ -16,6 +25,7 @@ class App extends Component {
     this.state = {
       myUserId: 'user01'
      ,myJsonObj: myJsonObj
+     ,myGmnState: myGamen.Main
     };
   }
 
@@ -39,10 +49,38 @@ class App extends Component {
   // }
 
   render() {
+    
+    // 表示する画面
+    let nav = (
+        <Nav bsStyle="pills" activeKey={this.state.myGmnState} onSelect={this.handleSelect}>
+          <NavItem eventKey={myGamen.Main}>お小遣い帳</NavItem>
+          <NavItem eventKey={myGamen.Himoku}>費目マスター</NavItem>
+        </Nav>
+      );
+    let gmn = null;
+
+    switch (this.state.myGmnState) {
+      case myGamen.None:
+        nav = null;
+        break;
+      case myGamen.Main:
+        gmn = (
+          <div>
+            <MyInput onClickBtnAdd={this.onClickBtnAdd} myUserId={this.state.myUserId}/>
+            <MyList myJsonObj={this.state.myJsonObj} onClickBtnDel={this.onClickBtnDel}/>
+          </div>
+        );
+        break;
+      case myGamen.Himoku:
+        gmn = <MyHimokuMaster />;
+        break;
+      default:
+    }
+    
     return (
       <div className="App">
-        <MyInput onClickBtnAdd={this.onClickBtnAdd} myUserId={this.state.myUserId}/>
-        <MyList myJsonObj={this.state.myJsonObj} onClickBtnDel={this.onClickBtnDel}/>
+        {nav}
+        {gmn}
       </div>
     );
   }
@@ -92,6 +130,21 @@ class App extends Component {
       ];
     }
     return jsonObj;
+  }
+  
+  // 
+  handleSelect = (selectedKey) => {
+    switch (selectedKey) {
+      case myGamen.None:
+        break;
+      case myGamen.Main:
+        this.setState({myGmnState:myGamen.Main});
+        break;
+      case myGamen.Himoku:
+        this.setState({myGmnState:myGamen.Himoku});
+        break;
+      default:
+    }
   }
 }
 

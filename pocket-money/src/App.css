@@ -1,19 +1,12 @@
 .jumbotron { backGround:url(img/car.JPG) center no-repeat; background-size: cover;}
 .jumbotron h1{color: #fff;}
-
 .myRegion {
   background-color: #fff;
-  padding:20px;
+  padding:10px;
   margin:10px;
   border:solid 1px #f60;
 }
-/*
-.form-group {
-  margin:10px;
-}
-*/
-.buttonRight {
-  float: right;
-}
+.buttonRight { float: right;}
+.nav {margin:10px;}
 
-body {background-color: #ffb;}
+ body {background-color: #ffb;}

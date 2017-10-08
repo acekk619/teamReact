@@ -13,13 +13,13 @@ class MyHimokuSelect extends React.Component {
   componentWillMount() {
     
     // データ作成
-    let initJsonObj = [
-      {'category_id':'00','category_name':'お菓子'}
-     ,{'category_id':'01','category_name':'本'}
-     ,{'category_id':'02','category_name':'文具'}
-     ,{'category_id':'03','category_name':'雑貨'}
-    ];
-    firebaseDb.ref('categories/'+this.props.myUserId).set(initJsonObj);
+    // let initJsonObj = [
+    //   {'category_id':'00','category_name':'お菓子'}
+    // ,{'category_id':'01','category_name':'本'}
+    // ,{'category_id':'02','category_name':'文具'}
+    // ,{'category_id':'03','category_name':'雑貨'}
+    // ];
+    // firebaseDb.ref('categories/'+this.props.myUserId).set(initJsonObj);
     
     // データ取得
     firebaseDb.ref('categories/'+this.props.myUserId).on('value',(snapshot)=>{
@@ -36,7 +36,7 @@ class MyHimokuSelect extends React.Component {
   }
   
   render() {
-    
+
     let items = [];
     if (this.state.myJsonObj != null){
       items = this.state.myJsonObj.map((item, index)=>{
