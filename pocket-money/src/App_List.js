@@ -10,17 +10,17 @@ class MyList extends React.Component {
     if (this.props.myJsonObj != null) {
       listItems = this.props.myJsonObj.map((item, index) =>
         <tr key={index}>
-            <td>{item.date}</td>
-            <td>{item.category_name}</td>
-            <td>{item.price}</td>
-            <td>
-              <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
-                      onClick={this.onClickButton}
-                      name={index}>
-                      <Glyphicon glyph="trash"/>
-              </Button>
-            </td>
-          </tr>
+          <td>{item.date}</td>
+          <td>{item.category_name}</td>
+          <td>{item.price}</td>
+          <td>
+            <Button type="button" className="btnDel" bsStyle="warning" bsSize="small" block 
+                    onClick={this.onClickButton}
+                    name={index}>
+                    <Glyphicon glyph="trash"/>
+            </Button>
+          </td>
+        </tr>
       );
     }
 

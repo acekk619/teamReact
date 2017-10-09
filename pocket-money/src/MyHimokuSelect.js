@@ -14,7 +14,7 @@ class MyHimokuSelect extends React.Component {
     
     // データ作成
     // let initJsonObj = [
-    //   {'category_id':'00','category_name':'お菓子'}
+    //  {'category_id':'00','category_name':'お菓子'}
     // ,{'category_id':'01','category_name':'本'}
     // ,{'category_id':'02','category_name':'文具'}
     // ,{'category_id':'03','category_name':'雑貨'}
@@ -37,19 +37,24 @@ class MyHimokuSelect extends React.Component {
   
   render() {
 
-    let items = [];
+    let listItems = [];
     if (this.state.myJsonObj != null){
-      items = this.state.myJsonObj.map((item, index)=>{
-        return(
-        <Radio onChange={this.onChageRaido}
-               value={item.category_id+item.category_name}
-               name="item">{item.category_name}</Radio>
-          );
-      });
+      for (let key in this.state.myJsonObj) {
+        let tempItem = (
+              <Radio onChange={this.onChageRaido}
+                     value={this.state.myJsonObj[key]['category_id']}
+                     name="item">{this.state.myJsonObj[key]['category_name']}</Radio>
+        );
+        if (listItems==null) {
+          listItems=[tempItem];
+        } else {
+          listItems.push(tempItem);
+        }
+      }
     }
     
     return (
-      <Panel header='費目' bsStyle="success">{items}</Panel>
+      <Panel header='費目' bsStyle="success">{listItems}</Panel>
     );
   }
 }

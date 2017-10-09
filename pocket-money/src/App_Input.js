@@ -1,4 +1,5 @@
 import React from 'react';
+import { firebaseDb } from './firebase';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import MyGraph from './MyGraph.js';
@@ -26,8 +27,23 @@ class MyInput extends React.Component {
 
   // 変更イベント：カテゴリ
   onChageRaido = (event) => {
-    this.setState({ inputCategory_id: event.currentTarget.value.substr(0,2)
-                   ,inputCategory_name: event.currentTarget.value.substr(2)});
+    console.log(event.currentTarget)
+    
+    // ID
+    this.setState({ inputCategory_id: event.currentTarget.value});
+    
+    // 名称（データ取得）
+    firebaseDb.ref('categories/'+this.props.myUserId+'/'+event.currentTarget.value)
+              .once('value').then((snapshot)=>{
+      if (snapshot.exists()){
+        this.setState({
+          // myJsonObj:JSON.parse(snapshot.val())
+          inputCategory_name : snapshot.val()['category_name']
+        });
+      } else {
+        this.setState({inputCategory_name:null});
+      }
+    });
   }
 
   // 変更イベント：金額
