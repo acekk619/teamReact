@@ -8,28 +8,40 @@ class MyHimokuMaster extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { HimokuName: ""
-                 , myJsonObj: null
-                 , myMessage: ""
+    this.state = { HimokuName  : ""
+                 , myJsonObj   : null
+                 , myMessage   : ""
+                 , myMessageDel: ""
+                 , mainJsonObj : null
     };
   }
 
   componentWillMount(){
-    // データ取得
+    // データ取得（費目マスター）
     firebaseDb.ref('categories/'+this.props.myUserId)
               .on('value',(snapshot)=>{
       if (snapshot.exists()){
-        this.setState({
-          // myJsonObj:JSON.parse(snapshot.val())
-          myJsonObj:snapshot.val()
-        });
+        this.setState({myJsonObj:snapshot.val()});
+      } else {
+        this.setState({myJsonObj:null});
       }
     });
+    
+    // データ取得（メイン）
+    firebaseDb.ref('main/'+this.props.myUserId)
+              .once('value').then((snapshot)=>{
+      if (snapshot.exists()){
+        this.setState({mainJsonObj : snapshot.val()});
+      } else {
+        this.setState({mainJsonObj : null});
+      }
+    });
+
   }
   
   render(){
     
-    // 入力
+    // 入力領域のエラーメッセージ
     let alertMessage = null;
     if (this.state.myMessage !== '') {
       alertMessage = <Alert bsStyle="danger">
@@ -38,14 +50,23 @@ class MyHimokuMaster extends React.Component {
                      </Alert>;
     }
     
-    // 追加ボタンの表示
+    // 追加ボタンの表示制御
     let blnAdd = false;
     if (this.state.HimokuName.length === 0) {
       blnAdd = true;
     }
     
+    // 一覧領域のエラーメッセージ
+    let alertMessageDel = null;
+    if (this.state.myMessageDel !== '') {
+      alertMessageDel = <Alert bsStyle="danger">
+                          <strong>存在チェックエラー</strong>
+                          {this.state.myMessageDel}
+                        </Alert>;
+    }
+    
     // 一覧の明細部
-    let listItems = [];
+    let listItems = null;
     if (this.state.myJsonObj != null) {
       for (let key in this.state.myJsonObj) {
         let tempItem = (
@@ -60,7 +81,7 @@ class MyHimokuMaster extends React.Component {
               </Button>
             </td>
           </tr>);
-        if (listItems.length===0){
+        if (listItems==null){
           listItems=[tempItem];
         } else {
           listItems.push(tempItem);        
@@ -69,7 +90,8 @@ class MyHimokuMaster extends React.Component {
     }
     
     return (
-      <div>      
+      <div>
+        {/* 入力領域 */}
         <div className="myRegion">
           {alertMessage}
           <FormGroup
@@ -91,8 +113,10 @@ class MyHimokuMaster extends React.Component {
           <Glyphicon glyph="plus" />追加</Button>          
         </div>
   
+        {/* 一覧領域 */}
         <div className="myRegion">
-         <Table responsive striped>
+          {alertMessageDel}
+          <Table responsive striped>
             <thead>
               <tr>
                 <th>費目ID</th>
@@ -102,7 +126,7 @@ class MyHimokuMaster extends React.Component {
             </thead>
             <tbody>{listItems}</tbody>
           </Table>
-         </div>
+        </div>
       </div>
     );
   }
@@ -150,17 +174,54 @@ class MyHimokuMaster extends React.Component {
 
   // データ作成
   insertData = () => {
+    // 重複チェック
+    if (this.checkDuplication() === false) {
+      return false;
+    }
+    // 仮登録
     let initJsonObj ={ 'category_id'  :'00'
                       ,'category_name':this.state.HimokuName};
-    firebaseDb.ref('categories/'+this.props.myUserId).push(initJsonObj);
+    let newkey 
+      = firebaseDb.ref('categories/'+this.props.myUserId).push(initJsonObj).key;
+    // Firebaseが発行したKeyをcategory_idに設定して更新
+    initJsonObj ={ 'category_id'  :newkey
+                  ,'category_name':this.state.HimokuName};
+    firebaseDb.ref('categories/'+this.props.myUserId+'/'+newkey).set(initJsonObj);
+  }
+  
+  // 重複チェック
+  checkDuplication = () => {
+    for (let key in this.state.myJsonObj) {
+      if (this.state.HimokuName === this.state.myJsonObj[key]['category_name']){
+        this.setState({myMessage:'：「費目名称」が重複しています。'});
+        return false;
+      }
+    }
+    this.setState({myMessage:''});
+    return true;
   }
   
   // データ削除
   deleteData = (delkey) => {
-    console.log(delkey)
+    // 使用中チェック
+    if (this.checkExist(delkey) === false) {
+      return false;
+    }
+    // 削除実行
     firebaseDb.ref('categories/'+this.props.myUserId+'/'+delkey).set(null);
   }
   
+  // 使用中チェック
+  checkExist = (delkey) => {
+    for (let key in this.state.mainJsonObj){
+      if (delkey===this.state.mainJsonObj[key]['category_id']){
+        this.setState({myMessageDel:'：すでに使用されているため削除できません。'});
+        return false;
+      }
+    }
+    this.setState({myMessageDel:''});
+    return true;
+  }
 }
 
 export default MyHimokuMaster;

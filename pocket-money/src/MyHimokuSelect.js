@@ -37,19 +37,24 @@ class MyHimokuSelect extends React.Component {
   
   render() {
 
-    let items = [];
+    let listItems = [];
     if (this.state.myJsonObj != null){
-      items = this.state.myJsonObj.map((item, index)=>{
-        return(
-        <Radio onChange={this.onChageRaido}
-               value={item.category_id+item.category_name}
-               name="item">{item.category_name}</Radio>
-          );
-      });
+      for (let key in this.state.myJsonObj) {
+        let tempItem = (
+              <Radio onChange={this.onChageRaido}
+                     value={this.state.myJsonObj[key]['category_id']}
+                     name="item">{this.state.myJsonObj[key]['category_name']}</Radio>
+        );
+        if (listItems==null) {
+          listItems=[tempItem];
+        } else {
+          listItems.push(tempItem);
+        }
+      }
     }
     
     return (
-      <Panel header='費目' bsStyle="success">{items}</Panel>
+      <Panel header='費目' bsStyle="success">{listItems}</Panel>
     );
   }
 }
